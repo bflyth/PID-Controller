@@ -96,4 +96,24 @@ still be compilable with cmake and make./
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
-# PID-Controller
+# PID-Controller Results and Discussion
+A video of the car driving around the track can be found in the results folder of this repo. 
+I found that tuning the proportional and integral controls are more effective in reducing car oscillation. There are spots during the lap during relatively high curves that the car will sway side to side quickly.
+
+The proportional factor is almost entirely in response to the CTE. Tuning this parameter will bring the car closer to its reference trajectory. A high value will almost definitely cause the car to overshoot, but too low of a value and the vehicle will take a long time to respond to changes in heading.
+
+The derivate factor is in response to the changes in CTE over time. As the error decreases, this parameter will use the difference over time to steer the car further from the reference. Too high a value causes the car to undershoot, and too low a value will cause the car to overshoot after reaching the reference trajectory.
+
+The integral factor I believe is very important and can help the car overcome drift. Steering drift being a bias in the turn ratio. Setting a high or low value here could cause the vehicle to overcompensate or undercompensate for drift which would be hazardous on a banked turn. This would cause the vehicle to run into the opposing lane or off the road.
+
+I found my three parameters by using guess and check, beginning with a 1,1,1 reference for both steering and throttle. Over time and testing I found reasonable values as follow:
+	Steering:
+	Kp -.125
+	Ki -.001
+	Kd -2.0
+	Throttle:
+	Kp -.2
+	Ki .1
+	Kd -2.0
+	
+At one point while starting the project, I tried using Twiddle to fine tune these parameters, but for the most part using coordinate ascent really boggled my numbers and caused the car to try driving in a circle.
